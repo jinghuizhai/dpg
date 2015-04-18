@@ -1,0 +1,24 @@
+<% include header.html %>
+	<div class="box pct70 bs p20 mt20">
+		<div class="mb20">
+			<h1 class="f400 mb15">登录
+				<% if(locals.err){ %>
+				<span class="light-red"><%= err %><span>
+				<% } %>
+			</h1>
+			<form action="/user/login" method="post">
+				<p>
+					<label>账号:</label>
+					<input type="text" name="email"/>
+				</p>
+				<p>
+					<label>密码:</label>
+					<input type="password" name="password"/>
+				</p>
+				<p class="mt15">
+					<button class="light-yellow-b">Go</button>
+				</p>
+			</form>
+		</div>
+	</div>
+<% include footer.html %>

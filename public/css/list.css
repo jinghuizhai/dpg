@@ -1,0 +1,50 @@
+/*代码标题页面*/
+.code-album{
+	float: left;
+	width: 22%;
+	margin:0 0 15px 4%;
+	min-height: 250px;
+	border:2px solid #f3f3f3;
+	background-color: #f3f3f3;
+	position: relative;
+}
+.code-album:hover{
+	border-color:#FC1B50;
+}
+.row .code-album:first-child{
+	margin-left: 0;
+}
+.author{
+	text-align: center;
+	color:#fff;
+	background-color: #16a085;
+	padding:10px 0;
+}
+.author-img{
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	border:1px solid #f3f3f3;
+}
+.author-img:hover{
+	box-shadow: 0 0 10px #ccc;
+}
+.author p span{
+	display: block;
+	float: left;
+	width: 50%;
+	text-align: left;
+}
+.author p span:first-child{
+	text-align: right;
+}
+.code-cut{
+	background-color: #f3f3f3;
+	padding:10px;
+	height: 130px;
+	display: table-cell;
+	text-align: center;
+	vertical-align: middle;
+	overflow: hidden;
+}
+

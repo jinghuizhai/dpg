@@ -1,0 +1,62 @@
+<% include header.html %>
+<%
+	
+%>
+	<div class="box p15 bs mt20 pct70">
+		<div>
+			<div class="abs">
+				<img src="<%=user.imgs%>" class="bh" />
+			</div>
+			<div class="ml70">
+				<h1 class="f400"><%=user.nickname%><span class="light-blue-b wh ml5 p2 br2 f14">座右铭</span></h1>
+				<p class="mt10">DaPiGou 第 <%=user.user_id%> 号会员，加入于 <%=user.date %>,香蕉<span class='light-yellow'><%=user.banana %><span></p>
+			</div>
+		</div>
+		<div class="bte mt20 pt20 pb10">
+			<a href="javascript:;" class="tag"><%=user.city %></a>
+			<a href="<%=user.site %>" class="tag">blog/product</a>
+			<a href="<%=user.git %>" class="tag">github</a>
+		</div>
+	</div>
+	<div class="box bs mt20 pct70">
+		<p class="p5 gc bbe">author最近的段子,共56</p>
+		<% if(articles){
+			articles.forEach(function(art){
+		 %>
+		<div class="item rel p10 bbe">
+			<h3>
+				<a href="/article/<%=art.article_id %>">
+					<%= art.title %>
+				</a>
+			</h3>
+			<p class="gc"><%= art.date %> 最后回复来自</p>
+			<a href="" title="回复" class="tags abs reply-t db mt10">7</a>
+		</div>
+		<% })}else{ %>
+			<p>暂时没有文章</p>
+		<% } %>
+		<p class="mt20 p10 tc">
+			<a href="" class="light-yellow-b wh pt8 pb8 pl20 pr20 br3">Pre</a>
+			<span class="pl10 pr10 gc">4/56</span>
+			<a href="" class="light-red-b wh pt8 pb8 pl20 pr20 br3">Next</a>
+		</p>
+	</div>
+	<div class="box bs mt20 pct70">
+		<p class="p5 gc bbe">author回复了,共45</p>
+		<% if(comments){
+			comments.forEach(function(c){
+		%>
+		<p class="p5 bbc">
+			原文
+		</p>
+		<p class="p5 bbc mb5 bl-blue">
+			<%=c.content %>
+		</p>
+		<% })} %>
+		<p class="mt20 p10 tc">
+			<a href="" class="light-yellow-b wh pt8 pb8 pl20 pr20 br3">Pre</a>
+			<span class="pl10 pr10 gc">4/56</span>
+			<a href="" class="light-red-b wh pt8 pb8 pl20 pr20 br3">Next</a>
+		</p>
+	</div>
+<% include footer.html %>

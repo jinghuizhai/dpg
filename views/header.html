@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html;charset=utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+		<title></title>
+		<link rel="stylesheet" href="/css/main.css">
+		<link rel="stylesheet" type="text/css" href="/css/highlight.css">
+		<link rel="stylesheet" href="/css/core.css">
+		<script type="text/javascript" src="http://static1.tuicool.com//assets/highlight.pack.js"></script>
+	</head>
+	<body>
+		<div class="header cf">
+			<div class="container">
+				<a class="logo" href="/">DaPiGou</a>
+				<div class="search">
+					<form>
+						<input name="key" type="text" placeholder="搜索代码段子"/>
+					</form>
+					<a href="http://www.baidu.com" target="_blank" class="share-link">分享代码</a>
+				</div>
+				<div class="login">
+					<% if(locals.user){ %>
+					<a href="/member"><%= user.email %></a>
+					<% } %>
+					<!-- <a href="/user/login">登录</a> -->
+					<!-- <a>登出</a> -->
+					<a>反馈</a>
+				</div>
+			</div>
+		</div>
+		<div class="container cf">
+			<div class="cf mt20">
+				<div class="box l pct70 p10 bs">	
+					<ul class="l">
+						<li class="inline-any">
+							<a>#首页</a>
+						</li>
+						<li class="inline-any">
+							<a>文章</a>
+						</li>
+					</ul>
+					<a href="" class="r light-red-b wh p2 br3">新回复</a>
+				</div>
+				<div class="box r pct25 p10 bs">
+					<a href="/user/login">登录</a>
+					<a href="/user/register">注册</a>
+					<a href="/user/logout">登出</a>
+					<a href="/article/write">写段落</a>
+				</div>
+			</div>

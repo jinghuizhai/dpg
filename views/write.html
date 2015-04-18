@@ -1,0 +1,65 @@
+<% include header.html %>
+	<link rel="stylesheet" type="text/css" href="http://kindeditor.net/ke4/themes/default/default.css">
+	<script type="text/javascript" charset="utf-8" src="http://kindeditor.net/ke4/kindeditor-min.js"></script>
+	<script type="text/javascript" charset="utf-8" src="http://kindeditor.net/ke4/lang/zh_CN.js"></script>
+	<style type="text/css">
+	.ke-container{
+		max-width: 100%;
+	}
+	.ke-content{
+		font-family:Consolas, "Liberation Mono", Menlo, Courier, monospace;
+	}
+	</style>
+	<div class="box pct70 bs p15 mt20">
+		<form action="/article/write" method="post">
+			<p>
+				<input type="text" name="title" class="pt10 pb10 pl2 pct60 bdc br3" placeholder="max=20"/>
+			</p>
+			<div class="post mt10">
+			<textarea name="content" class="pct100" style="height:400px;"></textarea>
+			</div>
+			<p class="mt20">
+				<button class="light-red-b" onclick="">写好了</button>
+			</p>
+		</form>
+	</div>
+	<script type="text/javascript">
+		var editor;
+		KindEditor.ready(function(K) {
+			editor = K.create('textarea[name="content"]', {
+				allowFileManager : true
+			});
+			// K('input[name=getHtml]').click(function(e) {
+			// 	alert(editor.html());
+			// });
+			// K('input[name=isEmpty]').click(function(e) {
+			// 	alert(editor.isEmpty());
+			// });
+			// K('input[name=getText]').click(function(e) {
+			// 	alert(editor.text());
+			// });
+			// K('input[name=selectedHtml]').click(function(e) {
+			// 	alert(editor.selectedHtml());
+			// });
+			// K('input[name=setHtml]').click(function(e) {
+			// 	editor.html('<h3>Hello KindEditor</h3>');
+			// });
+			// K('input[name=setText]').click(function(e) {
+			// 	editor.text('<h3>Hello KindEditor</h3>');
+			// });
+			// K('input[name=insertHtml]').click(function(e) {
+			// 	editor.insertHtml('<strong>插入HTML</strong>');
+			// });
+			// K('input[name=appendHtml]').click(function(e) {
+			// 	editor.appendHtml('<strong>添加HTML</strong>');
+			// });
+			// K('input[name=clear]').click(function(e) {
+			// 	editor.html('');
+			// });
+		});
+		function post(){
+			alert(editor.html());
+			return false;
+		}
+	</script>
+<% include footer.html %>

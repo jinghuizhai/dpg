@@ -1,0 +1,28 @@
+<% include header.html %>
+	<div class="box mt20 bs p20 pct70">
+		<div class="">
+			<h1 class="f400 mb20">注册
+				<% if(locals.err){ %>
+				<span class="light-red"><%=err %></span>
+				<% } %>
+			</h1>
+			<form action="/user/register" method="post">
+				<p>
+					<label>昵称:</label>
+					<input type="text" name="nickname" placeholder="英文与数字"/>
+				</p>
+				<p>
+					<label>账号:</label>
+					<input type="text" name="email" placeholder="Email"/>
+				</p>
+				<p>
+					<label>密码:</label>
+					<input type="password" name="password" />
+				</p>
+				<p class="mt10 mb20">
+					<button class="light-red-b">好了</button>
+				</p>
+			</form>
+		</div>
+	</div>
+<% include footer.html %>

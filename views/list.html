@@ -1,0 +1,32 @@
+<% include header.html %>
+<link rel="stylesheet" type="text/css" href="./css/list.css">
+<div class="cf mt20">
+	<div class="box pct70">
+		<% if(articles && articles.length > 0){articles.forEach(function(art,index){
+		%>
+		<div class="p10 rel bbc">
+			<div class="abs">
+				<a href="/member/<%=art.nickname %>">
+					<img src="<%=art.imgs %>" class="nh"/>
+				</a>
+			</div>
+			<div class="ml60">
+				<a href="/article/<%= art.article_id %>">
+					<h2 class="f300"><%=art.title %></h2>
+				</a>
+				<p class="gc mt5">
+					<a>
+						<%=art.email %>
+					</a>
+					<span><%=art.date %></span>
+					最后回复来自 <a href="#" class="light-blue">yahoo</a>
+				</p>
+			</div>
+			<a title="回复" href="#" class="tags abs reply-t db">7</a>
+		</div>
+		<% })}else{ %>
+		<p class="p20">暂无文章</p>
+		<% } %>
+	</div>
+</div>
+<% include footer.html %>

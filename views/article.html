@@ -1,0 +1,97 @@
+<% include header.html %>
+<link rel="stylesheet" type="text/css" href="./css/artical.css">
+<div class="cf">
+	<%
+	 if(locals.article && locals.user){
+	 	var art = article;
+	 %>
+	<div class="pct70 l">
+		<div class="box cf p10 bs mt20">
+			<div class="bbe cf pb5">
+				<div class="l pct70">
+					<h1 class="f500">
+						<a><%=art.title %></a>
+					</h1>
+					<p class="gc mt5 cpr">
+						<span><%=art.date %></span>
+						<span><span class="light-green">50</span>次点击</span>
+						<span><span class="light-yellow"><%= user.banana %></span>只香蕉</span>
+						<a class="light-blue" href="<%=user.git %>">github</a>
+					</p>
+				</div>
+				<div class="r pct30 tr">
+					<a href="/member/<%= user.nickname %>">
+						<img src="<%= user.imgs %>" class="bh" />
+					</a>
+				</div>
+			</div>
+			<p class="mt5 f14">能不能举个例子？</p>
+		</div>
+		<div class="box bs mt20">
+			<p class="bbc pt10 pb10 g9">
+				<span class="pl10 pr10">
+					<span class="pr2">45</span>
+					回复
+					<span class="pl5 pr5 ge">|</span>
+					最后回复时间:
+					<%= art.date %>
+					<span class="r">
+						<a class="tag" href>python</a>
+						<a class="tag" href>Django</a>
+						<a class="tag" href>ext</a>
+					</span>
+				</span>
+			</p>
+			<div class="pl10 pr10">
+				<div class="p10 f14">
+					<pre class="prettyprint"><code class="lang-javascript"></code></pre>
+					<p>
+						<%=art.content %>
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<% }else{ %>
+		<p>暂时没有文章</p>
+	<% } %>
+	<div class="pct25 r">
+		<div class="box mt20">
+			<h3 class="pt5 pb5 tc f18 f300">
+				新鲜分享
+			</h3>
+			<div class="pt10 pb5 pl10 pr10 bde"> 
+				<ul class="f14 cmb5">
+					<li>
+						<a>如何用js都建类</a>
+						<span class="r gc f12">2015-05-02</span>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="box mt20">
+			<h3 class="pt5 pb5 tc f18 f300">
+				可能感兴趣
+			</h3>
+			<div class="pt10 pb5 pl10 pr10 bde"> 
+				<ul class="f14 cmb5">
+					<li>
+						<a>如何用js都建类</a>
+						<span class="r gc f12">2015-05-02</span>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>	
+</div>
+<script type="text/javascript">
+    var pres = document.getartmentsByTagName("pre");
+    if(pres){
+    	var i = 0,len = pres.length;
+    	for(;i < len;i++){
+    		hljs.highlightBlock(pres[i],"<span class='indent'> </span>",false);
+    	}
+    }
+</script>
+<% include footer.html %>
