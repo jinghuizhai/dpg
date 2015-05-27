@@ -3,12 +3,12 @@ body{
 	margin: 0;
 	font-family:'microsoft yahei','微软雅黑','arial','宋体';
 	font-size: 12px;
-	/*background:url(http://s.srcdd.com/img/bg/htmlbg.$5752.png) repeat;*/
-	/*background:url(../img/grass.jpg) no-repeat;*/
-	background-color: #333;
-	/*background-size: 100% auto;*/
-	/*background-position: fixed;*/
+	/*background-color:rgba(0,0,0,0.2);*/
+	background:url(../img/grass.jpg) no-repeat;
+	background-size: 100% 100%;
+	background-attachment: fixed;
 	padding-bottom: 50px;
+	min-height: 860px;
 	position: relative;
 }
 body,a{
@@ -56,10 +56,14 @@ ul,li{
 li{
 	/*margin-bottom: 5px;*/
 }
-code{
+pre,code{
 	font-family:Consolas, "Liberation Mono", Menlo, Courier, monospace;
+	font-size: 14px !important;
 }
-input[name=password],input[name=username],input[name=email]{
+#edui1_iframeholder pre{
+	margin-bottom: 50px;
+}
+input[type=text],input[type=password]{
 	padding:6px 3px;
 	border:1px solid #ccc;
 	border-radius: 2px;
@@ -226,4 +230,22 @@ p{
 .reply-t{
 	top:20px;
 	right: 10px;
+}
+.pagination{
+	margin:2em 0;
+	padding:0 10px;
+	text-align: right;
+}
+.pagination a,.pagination b{
+	padding:8px 14px;
+	background-color: #f3f3f3;
+	border: 1px solid #dcdcdc;
+	margin-left: -1px;
+	color: #333;
+}
+.pagination a{
+	border:1px solid #ccc;
+}
+.pagination b{
+
 }

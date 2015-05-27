@@ -6,7 +6,11 @@ var express = require("./node_modules/express")
   , ejs = require('./node_modules/ejs')
   , session = require('./node_modules/express-session')
   , bodyParser = require('body-parser')
+  , tool = require("./util/tool")
   , app = express();
+
+// var formidable = require('formidable');
+var multer = require("./node_modules/multer");
 
 app.use(flash());
 app.use(session({
@@ -14,7 +18,7 @@ app.use(session({
   saveUninitialized: true,
   store:null,
   secret: 'dapigou',
-  cookie: { maxAge: 60 * 1000 }
+  cookie: { maxAge: 2*60*1000*60 }
 }));
 
 // app.set('views', __dirname + '/views');
@@ -33,10 +37,16 @@ app.enable('trust proxy');
 app.engine('.html', require('ejs').__express);
 app.set('view engine', 'html');
 
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true })).use(bodyParser.json());
+// app.use(bodyParser);
 
 router(app,session);
+// app.use(multer({ 
+//   dest:'./public/upload/',
+//   rename:function(fieldname, filename){
+//     return filename.replace(/\W+/g, '-').toLowerCase() + Date.now()
+//   }
+// }));
 
 http.createServer(app).listen(3000, function(){
   console.log("Express server listening on port " + app.get('port'));

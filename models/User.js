@@ -92,7 +92,7 @@ User.findByEmail = function(email,callback){
 User.findByNickname = function(nickname,callback){
 	callback = callback ? callback : function(){};
 	var query = connection.query('select * from user where nickname=?',nickname,function(err,rows){
-		log.info("User.findNickname",query.sql);
+		log.info("User.findByNickname",query.sql);
 		if(err){
 			return callback(err);
 		}else{

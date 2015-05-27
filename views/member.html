@@ -1,7 +1,4 @@
 <% include header.html %>
-<%
-	
-%>
 	<div class="box p15 bs mt20 pct70">
 		<div>
 			<div class="abs">
@@ -13,50 +10,45 @@
 			</div>
 		</div>
 		<div class="bte mt20 pt20 pb10">
-			<a href="javascript:;" class="tag"><%=user.city %></a>
+			<a href="javascript:;" class="tag"><%= user.city %></a>
 			<a href="<%=user.site %>" class="tag">blog/product</a>
 			<a href="<%=user.git %>" class="tag">github</a>
 		</div>
 	</div>
 	<div class="box bs mt20 pct70">
-		<p class="p5 gc bbe">author最近的段子,共56</p>
+		<p class="p5 g9 bbe"><%=user.nickname%>最近的段落,共<%=artCount%></p>
 		<% if(articles){
 			articles.forEach(function(art){
 		 %>
 		<div class="item rel p10 bbe">
-			<h3>
+			<h3 class="f500 f16">
 				<a href="/article/<%=art.article_id %>">
 					<%= art.title %>
 				</a>
 			</h3>
-			<p class="gc"><%= art.date %> 最后回复来自</p>
+			<p class="g9"><%= art.date %> 最后回复来自</p>
 			<a href="" title="回复" class="tags abs reply-t db mt10">7</a>
 		</div>
-		<% })}else{ %>
+		<% })%>
+		<p class="mt10 p10">
+			<a href="/article/a/<%= user.nickname %>/1">阅读<%=user.nickname %>更多段落</a>
+		</p>
+		<%}else{ %>
 			<p>暂时没有文章</p>
 		<% } %>
-		<p class="mt20 p10 tc">
+		<!-- <p class="mt20 p10 tc">
 			<a href="" class="light-yellow-b wh pt8 pb8 pl20 pr20 br3">Pre</a>
-			<span class="pl10 pr10 gc">4/56</span>
+			<span class="pl10 pr10 g9">4/56</span>
 			<a href="" class="light-red-b wh pt8 pb8 pl20 pr20 br3">Next</a>
-		</p>
+		</p> -->
 	</div>
 	<div class="box bs mt20 pct70">
-		<p class="p5 gc bbe">author回复了,共45</p>
+		<p class="p5 g9 bbe">author回复了,共45</p>
 		<% if(comments){
 			comments.forEach(function(c){
 		%>
-		<p class="p5 bbc">
-			原文
-		</p>
-		<p class="p5 bbc mb5 bl-blue">
-			<%=c.content %>
-		</p>
+		<p class="p5 bbc"><%c.date%></p>
+		<p class="p5 bbc mb5 bl-blue"><%=c.content %></p>
 		<% })} %>
-		<p class="mt20 p10 tc">
-			<a href="" class="light-yellow-b wh pt8 pb8 pl20 pr20 br3">Pre</a>
-			<span class="pl10 pr10 gc">4/56</span>
-			<a href="" class="light-red-b wh pt8 pb8 pl20 pr20 br3">Next</a>
-		</p>
 	</div>
 <% include footer.html %>

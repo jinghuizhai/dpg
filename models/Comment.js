@@ -12,12 +12,14 @@ function Comment(obj){
 	this.imgs = obj.imgs;
 	this.user_id = obj.user_id;
 	this.reply_id = obj.reply_id;
+	this.article_id = obj.article_id;
 	this.code = obj.code;
 	this.date = new Date();
 }
 
 Comment.save = function(comment,callback){
 	callback = callback ? callback : function(){};
+	comment.content = (comment.content || "").filterSym();
 	var query = connection.query("insert into comment set ?",comment,function(err,rows){
 		log.info(query.sql);
 		if(err){
@@ -78,8 +80,31 @@ Comment.findByUserid = function(user_id,callback,limit){
 		}
 	});
 };
-
-Comment.remove = function(comment_id,callback){
+Comment.findByArticleid = function(article_id,callback,limit){
+	var q = "select * from comment where article_id=?";
+	if(limit){
+		q = q + " limit "+limit.start+","+limit.end;
+	}
+	var query = connection.query(q,article_id,function(err,rows){
+		log.info("Comment.findByArticleid:",query.sql);
+		if(err){
+			return callback(err);
+		}else{
+			callback(null,rows);
+		}
+	});
+};
+Comment.removeByArticleid = function(article_id,callback){
+	var query = connection.query("delete from comment where article_id=?",article_id,function(err,rows){
+		log.info(query.sql);
+		if(err){
+			return callback(err);
+		}else{
+			callback(null,rows);
+		}
+	});
+};
+Comment.removeByCommentid = function(comment_id,callback){
 	callback = callback ? callback : function(){};
 	var query = connection.query("delete from comment where comment_id=?",comment_id,function(err,rows){
 		log.info(query.sql);

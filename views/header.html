@@ -20,11 +20,9 @@
 					<a href="http://www.baidu.com" target="_blank" class="share-link">分享代码</a>
 				</div>
 				<div class="login">
-					<% if(locals.user){ %>
-					<a href="/member"><%= user.email %></a>
+					<% if(locals.session.user){ %>
+					<a href="/member"><%= session.user.nickname %></a>
 					<% } %>
-					<!-- <a href="/user/login">登录</a> -->
-					<!-- <a>登出</a> -->
 					<a>反馈</a>
 				</div>
 			</div>
@@ -34,7 +32,7 @@
 				<div class="box l pct70 p10 bs">	
 					<ul class="l">
 						<li class="inline-any">
-							<a>#首页</a>
+							<a>首页</a>
 						</li>
 						<li class="inline-any">
 							<a>文章</a>

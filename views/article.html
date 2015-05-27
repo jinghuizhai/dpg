@@ -1,19 +1,19 @@
 <% include header.html %>
 <link rel="stylesheet" type="text/css" href="./css/artical.css">
+<script type="text/javascript" charset="utf-8" src="http://ueditor.baidu.com/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="http://ueditor.baidu.com/ueditor/ueditor.all.js"></script>
+<script type="text/javascript" src="/js/js.js"></script>
 <div class="cf">
-	<%
-	 if(locals.article && locals.user){
-	 	var art = article;
-	 %>
+	<%var art = article;%>
 	<div class="pct70 l">
 		<div class="box cf p10 bs mt20">
 			<div class="bbe cf pb5">
 				<div class="l pct70">
 					<h1 class="f500">
-						<a><%=art.title %></a>
+						<a href="/article/<%=art.article_id%>"><%=art.title %></a>
 					</h1>
 					<p class="gc mt5 cpr">
-						<span><%=art.date %></span>
+						<span><%=user.nickname %></span>
 						<span><span class="light-green">50</span>次点击</span>
 						<span><span class="light-yellow"><%= user.banana %></span>只香蕉</span>
 						<a class="light-blue" href="<%=user.git %>">github</a>
@@ -25,50 +25,83 @@
 					</a>
 				</div>
 			</div>
-			<p class="mt5 f14">能不能举个例子？</p>
+			<p class="mt5 f14">?</p>
 		</div>
 		<div class="box bs mt20">
-			<p class="bbc pt10 pb10 g9">
-				<span class="pl10 pr10">
+			<p class="bbc pt10 pb10 g9 pl10 pr10">
+				<span>
 					<span class="pr2">45</span>
-					回复
+					个回复
 					<span class="pl5 pr5 ge">|</span>
+					发表于<%= art.date %>
 					最后回复时间:
-					<%= art.date %>
 					<span class="r">
 						<a class="tag" href>python</a>
 						<a class="tag" href>Django</a>
 						<a class="tag" href>ext</a>
+						<%if(locals.self){%>
+							<a class="tag" href="/article/edit/<%=art.article_id %>">编辑</a>
+							<a class="tag light-red-b" href="/article/dele/<%=art.article_id %>">删除</a>
+						<%}%>
 					</span>
 				</span>
 			</p>
 			<div class="pl10 pr10">
 				<div class="p10 f14">
-					<pre class="prettyprint"><code class="lang-javascript"></code></pre>
-					<p>
-						<%=art.content %>
-					</p>
+					<!-- <pre class="prettyprint"><code class="lang-javascript"></code></pre> -->
+					<div>
+						<%-art.content %>
+					</div>
+					<%if(locals.session.user){%>
+					<div class="mt20 tr">
+						<a href="javascript:;" class="tag mb20" onclick="loadUe()">回复</a>
+					</div>
+					<div class="mt20">
+						<script type="text/plain" id="myEditor"></script>
+						<form action="/comment/write" method="post">
+							<input type="hidden" name="article_id" value="<%=art.article_id%>" />
+							<textarea class="dn" name="content" id="content"></textarea>
+							<div class="cf mt10">
+								<button id="reply" class="r dn light-red-b">写好了</button>
+							</div>
+						</form>
+					</div>
+					<%}%>
 				</div>
 			</div>
 		</div>
+ 
+		<div class="box bs mt20 pb5">
+			<p class="p5 g9 bbe">这篇文章的回复,共45</p>
+			<% if(comments){
+				comments.forEach(function(c){
+			%>
+			<p class="p5 bbe"><%=c.date%></p>
+			<div>
+				<%-c.content %>
+			</div>
+			<% })} %>
+		</div>
 	</div>
-	<% }else{ %>
-		<p>暂时没有文章</p>
-	<% } %>
+
 	<div class="pct25 r">
+		<%if(locals.fresh){%>
 		<div class="box mt20">
 			<h3 class="pt5 pb5 tc f18 f300">
 				新鲜分享
 			</h3>
 			<div class="pt10 pb5 pl10 pr10 bde"> 
 				<ul class="f14 cmb5">
+					<%fresh.forEach(function(ele){%>
 					<li>
-						<a>如何用js都建类</a>
-						<span class="r gc f12">2015-05-02</span>
+						<a class="g9" href="/article/<%=ele.article_id%>"><%=ele.title%></a>
+						<span class="gc f12"><%=ele.date%></span>
 					</li>
+					<%})%>
 				</ul>
 			</div>
 		</div>
+		<% } %>
 		<div class="box mt20">
 			<h3 class="pt5 pb5 tc f18 f300">
 				可能感兴趣
@@ -84,14 +117,67 @@
 		</div>
 	</div>
 </div>	
-</div>
+<!-- </div> -->
 <script type="text/javascript">
-    var pres = document.getartmentsByTagName("pre");
+    var pres = document.getElementsByTagName("pre");
     if(pres){
     	var i = 0,len = pres.length;
     	for(;i < len;i++){
     		hljs.highlightBlock(pres[i],"<span class='indent'> </span>",false);
     	}
+    }
+    function callScript(url, loaded, charset,error) {
+        error = error ? error : function(){};
+        charset = charset ? charset : "utf-8";
+
+        var script = document.createElement("script");
+        if (typeof charset == "string") script.charset = charset;
+        script.onreadystatechange = function() {
+            switch (this.readyState) {
+                case "complete":
+                case "loaded":
+                    if (typeof loaded == "function") loaded();
+                    if (script.parentNode) script.parentNode.removeChild(script);
+                    break;
+            }
+        }
+        script.onload = function() {
+            if (typeof loaded == "function") loaded();
+            if (script.parentNode) script.parentNode.removeChild(script);
+        }
+        script.onerror = function() {
+            if (typeof error == "function") error();
+            if (script.parentNode) script.parentNode.removeChild(script);
+        }
+        script.type = "text/javascript";
+        script.defer = "true";
+        script.src = url;
+        var parent = document.getElementsByTagName("head")[0] || document.documentElement;
+        parent.insertBefore(script, parent.firstChild);
+    }
+    function loadUe(){
+    	var ue = UE.getEditor('myEditor',{
+            //这里可以选择自己需要的工具按钮名称,此处仅选择如下五个
+            toolbars:[['FullScreen', 'Source', 'Undo','insertcode', 'Redo','Bold','selectall','fontsize','link','unlink','test']],
+            //focus时自动清空初始化时的内容
+            autoClearinitialContent:true,
+            //关闭字数统计
+            wordCount:false,
+            //关闭elementPath
+            elementPathEnabled:false,
+            //默认的编辑区域高度
+            initialFrameHeight:100
+        });
+        $("#reply").fadeIn();
+        ue.ready(function(){
+        	$("#reply").click(function(){        		
+        		var othis = $(this);
+        		if(ue.getContent().length > 0){
+        			$("#content").val(ue.getContent());
+        			othis.parent().submit();
+        		}
+        	});
+        });
     }
 </script>
 <% include footer.html %>

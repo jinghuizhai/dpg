@@ -1,0 +1,54 @@
+<% include header.html %>
+	<script type="text/javascript" charset="utf-8" src="http://ueditor.baidu.com/ueditor/ueditor.config.js"></script>
+    <script type="text/javascript" charset="utf-8" src="http://ueditor.baidu.com/ueditor/ueditor.all.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/js/js.js"></script>
+	<div class="box pct70 bs p15 mt20">
+		<form action="/article/edit" method="post">
+			<p>
+				<input id="title" type="text" value="<%=art.title%>" name="title" class="pt10 pb10 pl2 pct60 bdc br3" placeholder="max=20"/>
+			</p>
+            <%if(locals.err){%>
+                <p class="light-red"><%=err%></p>
+            <%}%>
+			<div class="post mt10">
+			<input type="hidden" name="article_id" value="<%=art.article_id%>"/>
+			<textarea id="content" class="dn" name="content" class="pct100"><%=art.content%></textarea>
+			<script type="text/plain" id="myEditor"></script>
+			</div>
+			<p class="mt20">
+				<button class="light-red-b" onclick="return submitPost()">编辑好了</button>
+			</p>
+		</form>
+	</div>
+
+	<script type="text/javascript">
+		var ue = UE.getEditor('myEditor',{
+            //这里可以选择自己需要的工具按钮名称,此处仅选择如下五个
+            toolbars:[['FullScreen', 'Source', 'Undo','insertcode', 'Redo','Bold','selectall','fontsize','link','unlink','test']],
+            //focus时自动清空初始化时的内容
+            autoClearinitialContent:true,
+            //关闭字数统计
+            wordCount:false,
+            //关闭elementPath
+            elementPathEnabled:false,
+            //默认的编辑区域高度
+            initialFrameHeight:300
+            //更多其他参数，请参考ueditor.config.js中的配置项
+            // serverUrl: '/server/ueditor/controller.php'
+        });
+        ue.ready(function(){
+        	ue.setContent($("#content").val());
+        });
+        function submitPost(){
+        	var title = $.trim($("#title").val() || "");
+        	var con = $.trim(ue.getContent() || "");
+        	if(title.length > 0 && con.length > 0){
+        		$("#content").val(con);
+        		$("form").submit();
+        	}else{
+        		return false;
+        	}
+        	// return false;
+        }
+	</script>
+<% include footer.html %>

@@ -1,65 +1,87 @@
 <% include header.html %>
-	<link rel="stylesheet" type="text/css" href="http://kindeditor.net/ke4/themes/default/default.css">
-	<script type="text/javascript" charset="utf-8" src="http://kindeditor.net/ke4/kindeditor-min.js"></script>
-	<script type="text/javascript" charset="utf-8" src="http://kindeditor.net/ke4/lang/zh_CN.js"></script>
-	<style type="text/css">
-	.ke-container{
-		max-width: 100%;
-	}
-	.ke-content{
-		font-family:Consolas, "Liberation Mono", Menlo, Courier, monospace;
-	}
-	</style>
+	<!-- <link rel="stylesheet" type="text/css" href="http://kindeditor.net/ke4/themes/default/default.css"> -->
+	<!-- // <script type="text/javascript" charset="utf-8" src="http://kindeditor.net/ke4/kindeditor-min.js"></script> -->
+	<!-- // <script type="text/javascript" charset="utf-8" src="http://kindeditor.net/ke4/lang/zh_CN.js"></script> -->
+	<script type="text/javascript" charset="utf-8" src="http://ueditor.baidu.com/ueditor/ueditor.config.js"></script>
+    <script type="text/javascript" charset="utf-8" src="http://ueditor.baidu.com/ueditor/ueditor.all.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/js/js.js"></script>
 	<div class="box pct70 bs p15 mt20">
 		<form action="/article/write" method="post">
 			<p>
-				<input type="text" name="title" class="pt10 pb10 pl2 pct60 bdc br3" placeholder="max=20"/>
+				<input id="title" type="text" name="title" class="pt10 pb10 pl2 pct60 bdc br3" placeholder="max=20"/>
 			</p>
 			<div class="post mt10">
-			<textarea name="content" class="pct100" style="height:400px;"></textarea>
+			<textarea id="content" class="dn" name="content" class="pct100"></textarea>
+			<script type="text/plain" id="myEditor"></script>
 			</div>
 			<p class="mt20">
-				<button class="light-red-b" onclick="">写好了</button>
+				<button class="light-red-b" onclick="return submitPost()">写好了</button>
 			</p>
 		</form>
 	</div>
+
 	<script type="text/javascript">
-		var editor;
-		KindEditor.ready(function(K) {
-			editor = K.create('textarea[name="content"]', {
-				allowFileManager : true
-			});
-			// K('input[name=getHtml]').click(function(e) {
-			// 	alert(editor.html());
-			// });
-			// K('input[name=isEmpty]').click(function(e) {
-			// 	alert(editor.isEmpty());
-			// });
-			// K('input[name=getText]').click(function(e) {
-			// 	alert(editor.text());
-			// });
-			// K('input[name=selectedHtml]').click(function(e) {
-			// 	alert(editor.selectedHtml());
-			// });
-			// K('input[name=setHtml]').click(function(e) {
-			// 	editor.html('<h3>Hello KindEditor</h3>');
-			// });
-			// K('input[name=setText]').click(function(e) {
-			// 	editor.text('<h3>Hello KindEditor</h3>');
-			// });
-			// K('input[name=insertHtml]').click(function(e) {
-			// 	editor.insertHtml('<strong>插入HTML</strong>');
-			// });
-			// K('input[name=appendHtml]').click(function(e) {
-			// 	editor.appendHtml('<strong>添加HTML</strong>');
-			// });
-			// K('input[name=clear]').click(function(e) {
-			// 	editor.html('');
-			// });
-		});
-		function post(){
-			alert(editor.html());
-			return false;
-		}
+		var ue = UE.getEditor('myEditor',{
+            //这里可以选择自己需要的工具按钮名称,此处仅选择如下五个
+            toolbars:[['FullScreen', 'Source', 'Undo','insertcode', 'Redo','Bold','selectall','fontsize','link','unlink','test']],
+            //focus时自动清空初始化时的内容
+            autoClearinitialContent:true,
+            //关闭字数统计
+            wordCount:false,
+            //关闭elementPath
+            elementPathEnabled:false,
+            //默认的编辑区域高度
+            initialFrameHeight:300
+            //更多其他参数，请参考ueditor.config.js中的配置项
+            // serverUrl: '/server/ueditor/controller.php'
+        });
+        function submitPost(){
+        	var title = $.trim($("#title").val() || "");
+        	var con = $.trim(ue.getContent() || "");
+        	if(title.length > 0 && con.length > 0){
+        		$("#content").val(con);
+        		$("form").submit();
+        	}else{
+        		return false;
+        	}
+        	// return false;
+        }
+		// var editor;
+		// KindEditor.ready(function(K) {
+		// 	editor = K.create('textarea[name="content"]', {
+		// 		allowFileManager : true
+		// 	});
+		// 	K('input[name=getHtml]').click(function(e) {
+		// 		alert(editor.html());
+		// 	});
+		// 	K('input[name=isEmpty]').click(function(e) {
+		// 		alert(editor.isEmpty());
+		// 	});
+		// 	K('input[name=getText]').click(function(e) {
+		// 		alert(editor.text());
+		// 	});
+		// 	K('input[name=selectedHtml]').click(function(e) {
+		// 		alert(editor.selectedHtml());
+		// 	});
+		// 	K('input[name=setHtml]').click(function(e) {
+		// 		editor.html('<h3>Hello KindEditor</h3>');
+		// 	});
+		// 	K('input[name=setText]').click(function(e) {
+		// 		editor.text('<h3>Hello KindEditor</h3>');
+		// 	});
+		// 	K('input[name=insertHtml]').click(function(e) {
+		// 		editor.insertHtml('<strong>插入HTML</strong>');
+		// 	});
+		// 	K('input[name=appendHtml]').click(function(e) {
+		// 		editor.appendHtml('<strong>添加HTML</strong>');
+		// 	});
+		// 	K('input[name=clear]').click(function(e) {
+		// 		editor.html('');
+		// 	});
+		// });
+		// function post(){
+		// 	alert(editor.html());
+		// 	return false;
+		// }
 	</script>
 <% include footer.html %>
